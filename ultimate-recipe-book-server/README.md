@@ -8,8 +8,7 @@
 
 Download npm if you don't have it.
 
-```
-#!command prompt
+```command prompt
 
 npm install
 ```
@@ -20,8 +19,7 @@ Either locally or hosted on a site like mLab.
 
 ### 3. Create a keys.json file in the root directory of ultimate-recipe-book-server
 
-```
-#!javascript
+```javascript
 
 {
   "mongoHost": "host",
@@ -31,13 +29,11 @@ Either locally or hosted on a site like mLab.
   "mongoPass": "password",
   "SECRET" : "secret"
 }
-
 ```
 
 ### 4. Run with NPM
 
-```
-#!command prompt
+```command prompt
 
 npm start
 ```
