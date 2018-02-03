@@ -24,37 +24,43 @@ const config = require('../config/database');
 
 // Recipe Schema
 const RecipeSchema = new Schema({
-	title: {
-		type: String
+	title: String,
+	description: String,
+	prepTime: String,
+	cookTime: String,
+	imageUrl: String,
+	servings: Number,
+	directions: [{
+		step: Number,
+		content: String
+	}],
+	nutrition: {
+		calories: Number,
+		protein: Number,
+		carbs: Number,
+		fat: Number,
+		sugar: Number
 	},
-	description: {
-		type: String
-	},
-	prepTime: {
-		type: Number
-	},
-	cookTime: {
-		type: Number
-	},
-	servings: {
-		type: Number,
-	},
-	directions: {
-		type: String,
-	},
-	imageUrl: {
-		type: String,
-	},
+	ingredients: [{
+		name: String,
+		amount: Number,
+		unit: String
+	}],
+	tools: [{
+		name: String,
+		amount: Number
+	}],
 	createdAt: {
 		type: Date,
 		default: Date.now
 	},
-	createdBy: {
-		type: String,
+	createdBy: String,
+	createdById: String,
+	ratings: {
+		voteCount: Number,
+		voteValue: Number
 	},
-	createdById: {
-		type: String,
-	}
+	views: Number
 });
 
 const Recipe = module.exports = mongoose.model('Recipe', RecipeSchema);
@@ -86,3 +92,28 @@ module.exports.updateRecipe = function(recipe, callback) {
 		id: recipe._id
 	}, recipe, callback);
 };
+
+
+
+// Add rating of Recipe
+module.exports.addRating = function(recipe, voteValue, callback) {
+	Recipe.update({
+		"_id": recipe._id
+	}, {
+		$inc: {
+			'ratings.voteCount': 1,
+			'ratings.voteValue': voteValue
+		}
+	}, callback);
+}
+
+// Add view
+module.exports.addView = function(recipe, callback) {
+	Recipe.update({
+		"_id": recipe._id
+	}, {
+		$inc: {
+			'views': 1
+		}
+	}, callback);
+}

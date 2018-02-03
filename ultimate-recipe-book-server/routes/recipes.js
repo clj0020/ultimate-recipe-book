@@ -101,9 +101,17 @@ router.post('/add', (req, res) => {
 		description: req.body.description,
 		prepTime: req.body.prepTime,
 		cookTime: req.body.cookTime,
+		imageUrl: req.body.imageUrl,
 		servings: req.body.servings,
 		directions: req.body.directions,
-		imageUrl: req.body.imageUrl
+		nutrition: req.body.nutrition,
+		ingredients: req.body.ingredients,
+		tools: req.body.tools,
+		ratings: {
+			voteCount: 0,
+			voteValue: 0
+		},
+		views: 0
 	});
 
 	// If the user is logged in, set them as the creator of the recipe.
