@@ -14,11 +14,21 @@ export class RecipeService {
       .map(res => res.json());
   }
 
-  // addTweet(tweet) {
-  //   console.log("Adding tweet using service.." + JSON.stringify(tweet));
-  //   let headers = new Headers();
-  //   headers.append('Content-Type', 'application/json');
-  //   return this.http.post('http://localhost:8080/tweets/add', tweet, {headers: headers})
-  //       .map(res => res.json());
-  // }
+  addRecipe(recipe) {
+    console.log("Adding recipe using service.." + JSON.stringify(recipe));
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:8080/recipes/add', recipe, { headers: headers })
+      .map(res => res.json());
+  }
+
+  getRecipe(id) {
+    console.log("Finding recipe with id " + id);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:8080/recipes/recipe/' + id, { headers: headers })
+      .map(res => res.json());
+
+  }
+
 }

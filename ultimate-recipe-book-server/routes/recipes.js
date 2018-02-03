@@ -28,8 +28,6 @@ const Recipe = require('../models/recipe');
 						pages: Number (optional)
 */
 router.get('/', (req, res) => {
-
-
 	const page = (req.params.page > 0 ? req.params.page : 1) - 1;
 	const perPage = 15;
 	const options = {
@@ -83,6 +81,7 @@ router.get('/', (req, res) => {
 					 body.cookTime Number (),
 					 body.servings Number (could turn into objects),
 					 body.directions: String (could turn into objects),
+					 body.imageUrl: String,
 					 req.user: User (optional)
 
 	Response: success: bool (),
@@ -103,7 +102,8 @@ router.post('/add', (req, res) => {
 		prepTime: req.body.prepTime,
 		cookTime: req.body.cookTime,
 		servings: req.body.servings,
-		directions: req.body.directions
+		directions: req.body.directions,
+		imageUrl: req.body.imageUrl
 	});
 
 	// If the user is logged in, set them as the creator of the recipe.
@@ -129,6 +129,44 @@ router.post('/add', (req, res) => {
 		}
 	});
 });
+
+/** Get Single Recipe
+
+	Description: Get a single recipe.
+
+	Endpoint: '/recipes/recipe/:id'
+
+	Method: Get
+
+	Auth: Open
+
+	Request: params.id: String (required)
+
+	Response: success: bool (),
+						msg: String (),
+						recipe: Recipe ()
+*/
+router.get('/recipe/:id', (req, res) => {
+	console.log('Hit endpoint: /recipes/recipe/id');
+
+	const id = req.params.id;
+
+	Recipe.getRecipeById(id, (err, recipe) => {
+		if (err) {
+			res.json({
+				success: false,
+				msg: 'Failed to find recipe.'
+			});
+		} else {
+			res.json({
+				success: true,
+				msg: 'Successfully found recipe.',
+				recipe: recipe
+			});
+		}
+	});
+});
+
 
 /** Update Single Recipe
 

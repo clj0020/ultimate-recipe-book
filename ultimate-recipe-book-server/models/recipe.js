@@ -42,6 +42,9 @@ const RecipeSchema = new Schema({
 	directions: {
 		type: String,
 	},
+	imageUrl: {
+		type: String,
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now

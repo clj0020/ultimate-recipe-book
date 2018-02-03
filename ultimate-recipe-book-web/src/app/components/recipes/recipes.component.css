@@ -1,0 +1,28 @@
+/*
+-------------- Basic Reset Css ----------
+ */
+
+* {
+  margin: 0px auto;
+  padding: 0px;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* -------- ----------- */
+
+.recipe-form {
+  margin-top: 1em;
+}
+
+#recipe-list {
+  margin-top: 1em;
+}
+
+#submit-recipe-button {
+  margin-top: 1em;
+}
+
+.form-control {
+  margin-top: 1em;
+}

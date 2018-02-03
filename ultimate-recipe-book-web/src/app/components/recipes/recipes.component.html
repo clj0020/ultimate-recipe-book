@@ -1,3 +1,147 @@
-<p>
-  recipes works!
-</p>
+<!-- <form (submit)="onPostTweet(); tweetForm.reset()" #tweetForm="ngForm">
+  <div class="input-group">
+    <input type="text" [(ngModel)]="currentContent" name="currentContent" class="form-control" placeholder="Add post...">
+    <span class="input-group-btn">
+      <input type="submit" class="btn btn-default" value="Done">
+    </span>
+  </div>
+</form> -->
+<!-- <ul class="list-group">
+  <li *ngFor="let recipe of recipes; let i = index" class="list-group-item" id="recipe-card">
+    <h3 class="title">{{ recipe.title }}</h3>
+    <h5 class="description">{{ recipe.description }}</h5>
+  </li>
+</ul> -->
+
+
+<div class="container">
+  <h2 class="page-header">Ultimate Recipe Book</h2>
+  <p class="lead">Welcome to your Recipe Book!</p>
+  <div class="row">
+    <div class="col-md-12">
+      <button (click)="toggleAddRecipeForm()">
+        <span *ngIf="!formActive">Add Recipe</span>
+        <span *ngIf="formActive">Hide</span>
+      </button>
+      <form (submit)="onAddRecipe(); recipeForm.reset()" #recipeForm="ngForm" *ngIf="formActive" class="recipe-form">
+        <div class="input-group">
+          <input type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Recipe Title...">
+        </div>
+        <div class="input-group">
+          <input type="text" [(ngModel)]="description" name="description" class="form-control" placeholder="Description...">
+        </div>
+        <div class="input-group">
+          <input type="number" [(ngModel)]="prepTime" name="prepTime" class="form-control" placeholder="Prep Time (in minutes)...">
+        </div>
+        <div class="input-group">
+          <input type="number" [(ngModel)]="cookTime" name="cookTime" class="form-control" placeholder="Cook Time (in minutes)...">
+        </div>
+        <div class="input-group">
+          <input type="number" [(ngModel)]="servings" name="servings" class="form-control" placeholder="How many does it serve?">
+        </div>
+        <div class="input-group">
+          <input type="text" [(ngModel)]="directions" name="directions" class="form-control" placeholder="Directions..">
+        </div>
+        <div class="input-group">
+          <input type="text" [(ngModel)]="imageUrl" name="imageUrl" class="form-control" placeholder="Image Url..">
+        </div>
+
+        <input type="submit" class="btn btn-default" value="Add Recipe" id="submit-recipe-button">
+      </form>
+    </div>
+  </div>
+  <!-- end recipe form -->
+
+  <!-- Recipe List -->
+  <div class="row" id="recipe-list">
+    <!-- Card Projects -->
+    <div class="col-md-12" *ngFor="let recipe of recipes; let i = index">
+      <recipe-card [recipe]="recipe"></recipe-card>
+      <!--
+      <div class="recipe-card">
+        <div class="main">
+          <div [ngClass]="{'custom-modal': true, 'custom-modal-active': recipe.active}">
+            <div class="cover-photo">
+              <div class="cover-phot-image-container">
+                <img src="{{ recipe.imageUrl }}" alt="{{ recipe.title }}" />
+              </div>
+              <div class="time-container">
+                <div class="time-circle">
+                  <h3>{{ recipe.prepTime + recipe.cookTime }}</h3>
+                  <span>MINS</span>
+                </div>
+                <div class="bookmark-icon">
+                  <a href="#">  <i class="material-icons">&#xE8E7;</i></a>
+                </div>
+              </div>
+              <div class="servings-container">
+                <h3>{{ recipe.servings }}</h3>
+                <span>SERVINGS</span>
+              </div>
+              <div class="details-container">
+                <h3>{{ recipe.title }}</h3>
+                <p>{{ recipe.description }}</p>
+              </div>
+            </div>
+            <div class="ingredients-directions-container">
+              <div class="hidden-container">
+                <div class="tabs-container">
+                  <ul>
+                    <li><a href="#"><h4>INGREDIENTS</h4></a></li>
+                    <li><a href="#"><h4>PREPARATION</h4></a></li>
+                  </ul>
+                </div>
+                <div class="directions-container">
+
+                  <div class="cont_title_preparation">
+                    <p>STEP 1</p>
+                  </div>
+                  <div class="cont_info_preparation">
+                    <p>Heat oven to 375 degress</p>
+                  </div>
+                </div>
+                <div class="directions-container">
+                  <div class="cont_title_preparation">
+                    <p>STEP 2</p>
+                  </div>
+                  <div class="cont_info_preparation">
+                    <p>Heat oil in a large skillet over medium-low head. Add onion and bell papper. Cook gently until very soft, about 20 minutes. Add garlic and cook until tender, 1 to 2 minutes; stir in cumin, paprika and cook 1 minute. Pour in tomatoes
+                      and season with 3/4 teaspoon salt and 1/4 teaspoon pepper;</p>
+                  </div>
+
+                </div>
+              </div>
+              <div class="more-steps-button">
+                <a href="#"><i class="material-icons">&#xE313;</i></a>
+              </div>
+            </div>
+            <div class="expand-card-container">
+              <a href="#e" (click)="activateClass(recipe)"><i class="material-icons">&#xE314;</i></a>
+            </div>
+
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+
+
+
+
+
+    <!-- <div class="card">
+        <img class="card-img-top" src="{{ recipe.imageUrl }}" alt="{{ recipe.title }}">
+        <div class="card-block">
+          <h4 class="card-title">{{ recipe.title }}</h4>
+          <p class="card-text">
+            {{ recipe.description }}
+            <br> Prep Time: {{ recipe.prepTime }} minutes
+            <br> Cook Time: {{ recipe.cookTime }} minutes
+          </p>
+
+          <button (click)="goToRecipePage(recipe._id)" class="btn btn-primary">Check it out</button>
+        </div>
+      </div> -->
+  </div>
+
+</div>
