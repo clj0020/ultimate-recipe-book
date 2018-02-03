@@ -53,10 +53,10 @@
   <!-- end recipe form -->
 
   <!-- Recipe List -->
-  <div class="row" id="recipe-list">
+  <div class="row" id="recipe-row" *ngFor="let recipe of recipes; let i = index">
     <!-- Card Projects -->
-    <div class="col-md-12" *ngFor="let recipe of recipes; let i = index">
-      <recipe-card [recipe]="recipe"></recipe-card>
+    <div class="col-md-12">
+      <recipe-card [recipe]="recipe" id="recipe-card"></recipe-card>
       <!--
       <div class="recipe-card">
         <div class="main">

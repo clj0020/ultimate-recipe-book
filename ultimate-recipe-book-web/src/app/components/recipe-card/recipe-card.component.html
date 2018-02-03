@@ -1,36 +1,36 @@
-<div class="row">
-  <div class="col-lg-6 col-sm-12">
-    <img class="img-fluid" src="{{ recipe.imageUrl }}">
+<div class="row" id="recipe-card">
+  <div class="col-lg-6 col-sm-12" id="recipe-image" [style.backgroundImage]="'url('+ recipe.imageUrl +')'">
   </div>
-  <div class="col-lg-6 col-sm-12">
+  <div class="col-lg-6 col-sm-12" id="recipe-info">
     <h4 class="category">Low Carb</h4>
     <h1 class="title">{{ recipe.title }}</h1>
     <h3 class="description">{{ recipe.description }}</h3>
-    <div class="row">
+    <div class="row" id="quick-stats">
       <div class="col-lg-4">
-        <h2 class="recipe-value">{{ recipe.prepTime + recipe.cookTime }}</h2>
+        <h2 class="recipe-value">{{ recipe.prepTime }}</h2>
         <h4 class="recipe-unit">mins</h4>
       </div>
       <div class="col-lg-4">
-        <h2 class="recipe-value">200</h2>
+        <h2 class="recipe-value">{{ recipe.nutrition.calories }}</h2>
         <h4 class="recipe-unit">calories</h4>
       </div>
       <div class="col-lg-4">
-        <h2 class="recipe-value">6</h2>
+        <h2 class="recipe-value">{{ recipe.ingredients.length }}</h2>
         <h4 class="recipe-unit">ingredients</h4>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <h3>Rating ******</h3>
+    <div class="row text-center">
+      <div class="col-lg-12">
+        <h3 class="recipe-rating">{{ recipe.ratings.voteValue }} rating</h3>
+        <h4 class="numVotes">{{ recipe.ratings.voteCount }} number of votes</h4>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-3">
-        <button (click)="goToRecipePage(recipe._id)">View Recipe</button>
+    <div class="row" id="button-row">
+      <div class="col-lg-6">
+        <a class="button green" (click)="goToRecipePage(recipe._id)">View Recipe</a>
       </div>
-      <div class="col-lg-3">
-        <button>Add to Recipe Book</button>
+      <div class="col-lg-6">
+        <button class="button blue">Bookmark</button>
       </div>
     </div>
   </div>

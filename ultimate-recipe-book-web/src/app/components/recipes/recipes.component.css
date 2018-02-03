@@ -11,12 +11,24 @@
 
 /* -------- ----------- */
 
+.page-header {
+  margin-top: 1.5em;
+  margin-bottom: 0.2em;
+  font-size: 40px;
+}
+
+.lead {
+  margin-bottom: 1.5em;
+  font-size: 20px;
+}
+
 .recipe-form {
   margin-top: 1em;
 }
 
-#recipe-list {
-  margin-top: 1em;
+#recipe-row {
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 #submit-recipe-button {
@@ -25,4 +37,8 @@
 
 .form-control {
   margin-top: 1em;
+}
+
+#recipe-card {
+  margin-top: 10em;
 }
