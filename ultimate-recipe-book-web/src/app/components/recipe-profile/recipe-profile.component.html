@@ -38,7 +38,7 @@
         <h3>Ingredients</h3>
         <ul>
           <li *ngFor="let ingredient of recipe.ingredients; let i = index">
-            {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
+            {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.ingredient.title }}
           </li>
         </ul>
       </div>

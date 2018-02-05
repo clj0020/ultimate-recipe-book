@@ -51,6 +51,7 @@ const app = express();
 
 // const users = require('./routes/users');
 const recipes = require('./routes/recipes');
+const ingredients = require('./routes/ingredients');
 
 // Port Number
 const port = process.env.PORT || 8080;
@@ -73,6 +74,7 @@ app.use(bodyParser.json());
 
 // app.use('/users', users);
 app.use('/recipes', recipes);
+app.use('/ingredients', ingredients);
 
 // Index Route
 app.get('/', (req, res) => {

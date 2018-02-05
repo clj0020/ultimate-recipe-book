@@ -3,27 +3,23 @@ const router = express.Router();
 const config = require('../config/database');
 const auth = require('../config/auth');
 // const User = require('../models/user');
-const Recipe = require('../models/recipe');
+const Ingredient = require('../models/ingredient');
 
-/** Recipe Routes
-		Notes: Need to update for auth.
-**/
+/** List Ingredients
 
-/** List Recipes
+	Description: List ingredients.
 
-	Description: List recipes.
-
-	Endpoint: '/recipes'
+	Endpoint: '/ingredients'
 
 	Method: GET
 
 	Auth: Open
 
-	Request: params.page: Number (For pagination through recipes)
+	Request: params.page: Number (For pagination through ingredients)
 
 	Response: success: bool (required),
 						msg: String (required),
-						recipes: Recipe[] (optional),
+						ingredients: Ingredient[] (optional),
 						page: Number (optional),
 						pages: Number (optional)
 */
@@ -35,28 +31,28 @@ router.get('/', (req, res) => {
 		page: page
 	};
 
-	// Call the listRecipes method of Recipe model.
-	Recipe.listRecipes(options, (err, recipes) => {
+	// Call the listIngredients method of Ingredient model.
+	Ingredient.listIngredients(options, (err, ingredients) => {
 		// If theres an error, success will be false
 		if (err) {
 			return res.json({
 				success: false,
-				msg: 'Failed to retrieve recipes: ' + err
+				msg: 'Failed to retrieve ingredients: ' + err
 			});
 		}
-		// Get the number of recipes
-		Recipe.count().exec((err, count) => {
+		// Get the number of ingredients
+		Ingredient.count().exec((err, count) => {
 			if (err) {
 				return res.json({
 					success: false,
-					msg: 'Failed to retrieve recipes: ' + err
+					msg: 'Failed to retrieve ingredients: ' + err
 				});
 			}
-			// Success! Send back recipes along with page info
+			// Success! Send back ingredients along with page info
 			res.json({
 				success: true,
-				msg: 'Got your recipes',
-				recipes: recipes,
+				msg: 'Got your ingredients',
+				ingredients: ingredients,
 				page: page + 1,
 				pages: Math.ceil(count / perPage),
 
@@ -65,11 +61,11 @@ router.get('/', (req, res) => {
 	})
 });
 
-/** Add Recipe
+/** Add Ingredient
 
-	Description: Add a recipe to the database.
+	Description: Add a ingredient to the database.
 
-	Endpoint: '/recipes/add'
+	Endpoint: '/ingredients/add'
 
 	Method: POST
 
@@ -86,63 +82,50 @@ router.get('/', (req, res) => {
 
 	Response: success: bool (),
 						msg: String (),
-						recipe: Recipe ()
+						ingredient: Ingredient ()
 */
 router.post('/add', (req, res) => {
-	console.log('Hit endpoint: /recipes/add');
+	console.log('Hit endpoint: /ingredients/add');
 
-	//set host of this recipe to the creator if field is blank?
+	//set host of this ingredient to the creator if field is blank?
 	//(or give them no option to add host? Not sure what the desire is here)
 	//We want to allow owners to assign other hosts to help them plan.
 	//This is not necessary for the v1 but I can see many scenarios that it would be used in.
 	//Mainly need to be able to invite other people efficiently
-	let newRecipe = new Recipe({
+	let newIngredient = new Ingredient({
 		title: req.body.title,
-		description: req.body.description,
-		prepTime: req.body.prepTime,
-		cookTime: req.body.cookTime,
-		imageUrl: req.body.imageUrl,
-		servings: req.body.servings,
-		directions: req.body.directions,
-		nutrition: req.body.nutrition,
-		ingredients: req.body.ingredients,
-		tools: req.body.tools,
-		ratings: {
-			voteCount: 0,
-			voteValue: 0
-		},
-		views: 0
+		nutrition: req.body.nutrition
 	});
 
-	// If the user is logged in, set them as the creator of the recipe.
+	// If the user is logged in, set them as the creator of the ingredient.
 	if (req.user) {
-		newRecipe.createdBy = req.user.displayName;
-		newRecipe.createdById = req.user.id;
+		newIngredient.createdBy = req.user.displayName;
+		newIngredient.createdById = req.user.id;
 	} else {
-		newRecipe.createdBy = 'Anonymous';
+		newIngredient.createdBy = 'Anonymous';
 	}
 
-	Recipe.addRecipe(newRecipe, (err, recipe) => {
+	Ingredient.addIngredient(newIngredient, (err, ingredient) => {
 		if (err) {
 			res.json({
 				success: false,
-				msg: 'Failed to add recipe!' + err
+				msg: 'Failed to add ingredient!'
 			});
 		} else {
 			res.json({
 				success: true,
-				msg: 'Successfully added recipe!',
-				recipe: recipe
+				msg: 'Successfully added ingredient!',
+				ingredient: ingredient
 			});
 		}
 	});
 });
 
-/** Get Single Recipe
+/** Get Single Ingredient
 
-	Description: Get a single recipe.
+	Description: Get a single ingredient.
 
-	Endpoint: '/recipes/recipe/:id'
+	Endpoint: '/ingredients/ingredient/:id'
 
 	Method: Get
 
@@ -152,45 +135,45 @@ router.post('/add', (req, res) => {
 
 	Response: success: bool (),
 						msg: String (),
-						recipe: Recipe ()
+						ingredient: Ingredient ()
 */
-router.get('/recipe/:id', (req, res) => {
-	console.log('Hit endpoint: /recipes/recipe/id');
+router.get('/ingredient/:id', (req, res) => {
+	console.log('Hit endpoint: /ingredients/ingredient/id');
 
 	const id = req.params.id;
 
-	Recipe.getRecipeById(id, (err, recipe) => {
+	Ingredient.getIngredientById(id, (err, ingredient) => {
 		if (err) {
 			res.json({
 				success: false,
-				msg: 'Failed to find recipe.'
+				msg: 'Failed to find ingredient.'
 			});
 		} else {
 			res.json({
 				success: true,
-				msg: 'Successfully found recipe.',
-				recipe: recipe
+				msg: 'Successfully found ingredient.',
+				ingredient: ingredient
 			});
 		}
 	});
 });
 
 
-/** Update Single Recipe
+/** Update Single Ingredient
 
-	Description: Update a recipe
+	Description: Update a ingredient
 
-	Endpoint: '/recipes/update'
+	Endpoint: '/ingredients/update'
 
 	Method: POST
 
 	Auth: Restricted
 
-	Request: 	body.recipe: Recipe (with new values)
+	Request: 	body.ingredient: Ingredient (with new values)
 
 	Response: success: bool (required),
 						msg: String (required),
-						recipes: Recipe[] (optional),
+						ingredients: Ingredient[] (optional),
 						page: Number (optional),
 						pages: Number (optional)
 */
@@ -222,7 +205,7 @@ router.post('/update', (req, res) => {
 		'_id': id
 	};
 	//vars must be wrapped in []'s in these mongoose queries
-	Recipe.findOneAndUpdate(query, {
+	Ingredient.findOneAndUpdate(query, {
 		$set: {
 			[updateField]: [updateValue]
 		}
@@ -233,14 +216,14 @@ router.post('/update', (req, res) => {
 		if (err) {
 			res.json({
 				success: false,
-				msg: "Failed to update recipe"
+				msg: "Failed to update ingredient"
 			});
 		} else {
 			//get the updated doc and return it to the frontend
-			Recipe.findById(req.body.id, (err, doc) => {
+			Ingredient.findById(req.body.id, (err, doc) => {
 				res.json({
 					success: true,
-					msg: "Successfully updated recipe",
+					msg: "Successfully updated ingredient",
 					doc: doc
 				});
 			})
@@ -248,89 +231,89 @@ router.post('/update', (req, res) => {
 	});
 });
 
-/** Delete Recipe
+/** Delete Ingredient
 
-	Description: Delete a recipe.
+	Description: Delete a ingredient.
 
-	Endpoint: '/recipes/remove'
+	Endpoint: '/ingredients/remove'
 
 	Method: POST
 
 	Auth: Restricted
 
-	Request: 	recipeId: String,
-						params.page: Number (For pagination through recipes)
+	Request: 	ingredientId: String,
+						params.page: Number (For pagination through ingredients)
 
 	Response: success: bool (required),
 						msg: String (required)
 
 */
 router.post('/remove', (req, res) => {
-	//remove recipe if permissions allow
+	//remove ingredient if permissions allow
 });
 
-/** List User's Uploaded Recipes
+/** List User's Uploaded Ingredients
 
-	Description: List recipes that the user has uploaded.
+	Description: List ingredients that the user has uploaded.
 
-	Endpoint: '/recipes/user/uploads/'
+	Endpoint: '/ingredients/user/uploads/'
 
 	Method: POST
 
 	Auth: Restricted
 
-	Request: params.page: Number (For pagination through recipes)
+	Request: params.page: Number (For pagination through ingredients)
 
 	Response: success: bool (required),
 						msg: String (required),
-						recipes: Recipe[] (optional),
+						ingredients: Ingredient[] (optional),
 						page: Number (optional),
 						pages: Number (optional)
 */
 
-/** List User's Saved Recipes
+/** List User's Saved Ingredients
 
-	Description: List the user's saved recipes.
+	Description: List the user's saved ingredients.
 
-	Endpoint: '/recipes/user/saved/'
+	Endpoint: '/ingredients/user/saved/'
 
 	Method: POST
 
 	Auth: Restricted
 
 	Request: 	body.user: User,
-						params.page: Number (For pagination through recipes)
+						params.page: Number (For pagination through ingredients)
 
 	Response: success: bool (required),
 						msg: String (required),
-						recipes: Recipe[] (optional),
+						ingredients: Ingredient[] (optional),
 						page: Number (optional),
 						pages: Number (optional)
 */
 
-/** List User's Recipe Feed
+/** List User's Ingredient Feed
 
-	Description: List recipes according to user's preferences.
+	Description: List ingredients according to user's preferences.
 
-	Endpoint: '/recipes/feed/'
+	Endpoint: '/ingredients/feed/'
 
 	Method: POST
 
 	Auth: Restricted
 
 	Request: 	body.user: User, (with preferences)
-						params.page: Number (For pagination through recipes)
+						params.page: Number (For pagination through ingredients)
 
 	Response: success: bool (required),
 						msg: String (required),
-						recipes: Recipe[] (optional),
+						ingredients: Ingredient[] (optional),
 						page: Number (optional),
 						pages: Number (optional)
 */
 
-/** Scrape open source hrecipes from the recipe depository.
+/** Scrape open source hingredients from the ingredient depository.
 
-Description: scrape recipes from
+Description: scrape ingredients from
 
 
 */

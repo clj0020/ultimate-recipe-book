@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const IngredientModel = require('../models/ingredient');
 
 /** Can change the price type to currency, have to look at the mongoose-currency
     library for how to implement.
@@ -41,10 +42,22 @@ const RecipeSchema = new Schema({
 		fat: Number,
 		sugar: Number
 	},
+	// ingredients: [{
+	// 	name: String,
+	// 	amount: Number,
+	// 	unit: String
+	// }],
 	ingredients: [{
-		name: String,
-		amount: Number,
-		unit: String
+		ingredient: {
+			type: Schema.ObjectId,
+			ref: 'ingredient'
+		},
+		unit: {
+			type: String
+		},
+		amount: {
+			type: String
+		}
 	}],
 	tools: [{
 		name: String,
@@ -66,14 +79,14 @@ const RecipeSchema = new Schema({
 const Recipe = module.exports = mongoose.model('Recipe', RecipeSchema);
 
 module.exports.getRecipeById = function(id, callback) {
-	Recipe.findById(id, callback);
+	Recipe.findById(id, callback).populate('ingredients.ingredient');
 };
 
 // List Recipes
 module.exports.listRecipes = function(options, callback) {
 	const criteria = options.criteria || {};
 	Recipe.find(criteria)
-		// .populate('user', 'name username')
+		.populate('ingredients', 'ingredient unit amount')
 		.sort({
 			'createdAt': -1
 		})

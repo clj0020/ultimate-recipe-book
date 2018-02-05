@@ -24,6 +24,7 @@ export class RecipeProfileComponent implements OnInit {
       .getRecipe(this.route.snapshot.paramMap.get('id'))
       .subscribe(res => {
         this.recipe = res.recipe;
+        console.log(this.recipe);
       },
       err => {
         console.log("There was an error with getting the recipe: " + err);
