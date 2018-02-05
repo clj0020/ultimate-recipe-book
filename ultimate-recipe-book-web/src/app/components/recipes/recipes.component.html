@@ -14,50 +14,50 @@
 </ul> -->
 
 
-<div class="container">
-  <h2 class="page-header">Ultimate Recipe Book</h2>
-  <p class="lead">Welcome to your Recipe Book!</p>
-  <div class="row">
-    <div class="col-md-12">
-      <button (click)="toggleAddRecipeForm()">
+
+<h2 class="page-header">Ultimate Recipe Book</h2>
+<p class="lead">Welcome to your Recipe Book!</p>
+<div class="row">
+  <div class="col-md-12">
+    <button (click)="toggleAddRecipeForm()">
         <span *ngIf="!formActive">Add Recipe</span>
         <span *ngIf="formActive">Hide</span>
       </button>
-      <form (submit)="onAddRecipe(); recipeForm.reset()" #recipeForm="ngForm" *ngIf="formActive" class="recipe-form">
-        <div class="input-group">
-          <input type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Recipe Title...">
-        </div>
-        <div class="input-group">
-          <input type="text" [(ngModel)]="description" name="description" class="form-control" placeholder="Description...">
-        </div>
-        <div class="input-group">
-          <input type="number" [(ngModel)]="prepTime" name="prepTime" class="form-control" placeholder="Prep Time (in minutes)...">
-        </div>
-        <div class="input-group">
-          <input type="number" [(ngModel)]="cookTime" name="cookTime" class="form-control" placeholder="Cook Time (in minutes)...">
-        </div>
-        <div class="input-group">
-          <input type="number" [(ngModel)]="servings" name="servings" class="form-control" placeholder="How many does it serve?">
-        </div>
-        <div class="input-group">
-          <input type="text" [(ngModel)]="directions" name="directions" class="form-control" placeholder="Directions..">
-        </div>
-        <div class="input-group">
-          <input type="text" [(ngModel)]="imageUrl" name="imageUrl" class="form-control" placeholder="Image Url..">
-        </div>
+    <form (submit)="onAddRecipe(); recipeForm.reset()" #recipeForm="ngForm" *ngIf="formActive" class="recipe-form">
+      <div class="input-group">
+        <input type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Recipe Title...">
+      </div>
+      <div class="input-group">
+        <input type="text" [(ngModel)]="description" name="description" class="form-control" placeholder="Description...">
+      </div>
+      <div class="input-group">
+        <input type="number" [(ngModel)]="prepTime" name="prepTime" class="form-control" placeholder="Prep Time (in minutes)...">
+      </div>
+      <div class="input-group">
+        <input type="number" [(ngModel)]="cookTime" name="cookTime" class="form-control" placeholder="Cook Time (in minutes)...">
+      </div>
+      <div class="input-group">
+        <input type="number" [(ngModel)]="servings" name="servings" class="form-control" placeholder="How many does it serve?">
+      </div>
+      <div class="input-group">
+        <input type="text" [(ngModel)]="directions" name="directions" class="form-control" placeholder="Directions..">
+      </div>
+      <div class="input-group">
+        <input type="text" [(ngModel)]="imageUrl" name="imageUrl" class="form-control" placeholder="Image Url..">
+      </div>
 
-        <input type="submit" class="btn btn-default" value="Add Recipe" id="submit-recipe-button">
-      </form>
-    </div>
+      <input type="submit" class="btn btn-default" value="Add Recipe" id="submit-recipe-button">
+    </form>
   </div>
-  <!-- end recipe form -->
+</div>
+<!-- end recipe form -->
 
-  <!-- Recipe List -->
-  <div class="row" id="recipe-row" *ngFor="let recipe of recipes; let i = index">
-    <!-- Card Projects -->
-    <div class="col-md-12">
-      <recipe-card [recipe]="recipe" id="recipe-card"></recipe-card>
-      <!--
+<!-- Recipe List -->
+<div class="row" id="recipe-row" *ngFor="let recipe of recipes; let i = index">
+  <!-- Card Projects -->
+  <div class="col-md-12">
+    <recipe-card [recipe]="recipe" id="recipe-card"></recipe-card>
+    <!--
       <div class="recipe-card">
         <div class="main">
           <div [ngClass]="{'custom-modal': true, 'custom-modal-active': recipe.active}">
@@ -123,13 +123,13 @@
         </div>
       </div> -->
 
-    </div>
+  </div>
 
 
 
 
 
-    <!-- <div class="card">
+  <!-- <div class="card">
         <img class="card-img-top" src="{{ recipe.imageUrl }}" alt="{{ recipe.title }}">
         <div class="card-block">
           <h4 class="card-title">{{ recipe.title }}</h4>
@@ -142,6 +142,4 @@
           <button (click)="goToRecipePage(recipe._id)" class="btn btn-primary">Check it out</button>
         </div>
       </div> -->
-  </div>
-
 </div>

@@ -1,8 +1,136 @@
-<div class="container" *ngIf="recipe">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1>{{ recipe.title }}</h1>
-      <p>{{ recipe.description }}</p>
+<div class="row" *ngIf="recipe">
+  <div class="col-lg-12">
+    <img id="recipe-profile-image" class="img-fluid mx-auto d-block" src="{{ recipe.imageUrl }}" />
+    <div class="row">
+      <div class="col-lg-12">
+        <h1>{{ recipe.title }}</h1>
+        <p>{{ recipe.description }}</p>
+      </div>
     </div>
+    <div class="row text-center">
+      <div class="col-lg-3">
+        <h3>Rating</h3>
+        <h4>{{ recipe.ratings.voteValue }} stars</h4>
+        <h5>{{ recipe.ratings.voteCount }} votes</h5>
+      </div>
+      <div class="col-lg-3">
+        <h3>Prep Time</h3>
+        <h4>{{ recipe.prepTime }}</h4>
+        <h5>mins</h5>
+      </div>
+      <div class="col-lg-3">
+        <h3>Cook Time</h3>
+        <h4>{{ recipe.cookTime }}</h4>
+        <h5>mins</h5>
+      </div>
+      <div class="col-lg-3">
+        <h3>Author</h3>
+        <h4>{{ recipe.createdBy }}</h4>
+      </div>
+    </div>
+
+    <div class="row">
+
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 offset-lg-3">
+        <h3>Ingredients</h3>
+        <ul>
+          <li *ngFor="let ingredient of recipe.ingredients; let i = index">
+            {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <h3>Tools</h3>
+        <ul>
+          <li *ngFor="let tool of recipe.tools; let i = index">
+            {{ tool.amount }} {{ tool.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <div class="nutrition-label">
+          <div class="nutrition-title">Nutrition Facts</div>
+          <div class="nutrition-recipe">{{ recipe.title }}</div>
+          <div class="nutrition-line nutrition-line-big"></div>
+          <div class="nutrition-serving">Amount Per Serving</div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Calories</strong> {{ recipe.nutrition.calories }}</span>
+            <span class="nutrition-percentage">Calories from Fat 81</span>
+          </div>
+          <div class="nutrition-line"></div>
+          <div class="nutrition-item">
+            <span class="nutrition-percentage"><strong>% Daily Value*</strong></span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Total Fat</strong> {{ recipe.nutrition.fat }}g</span>
+            <span class="nutrition-percentage"><strong>{{ getDailyValue(recipe, "fat") }}%</strong></span>
+          </div>
+          <div class="nutrition-sub-item">
+            <span class="nutrition-sub">Saturated Fat 6g</span>
+            <span class="nutrition-percentage"><strong>30%</strong></span>
+          </div>
+          <div class="nutrition-sub-item">
+            <span class="nutrition-sub">Polyunsaturated Fat 0.2g</span>
+          </div>
+          <div class="nutrition-sub-item">
+            <span class="nutrition-sub">Monounsaturated Fat 1g</span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Cholesterol</strong> 21mg</span>
+            <span class="nutrition-percentage"><strong>7%</strong></span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Sodium</strong> 56mg</span>
+            <span class="nutrition-percentage"><strong>2%</strong></span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Potassium</strong> 8mg</span>
+            <span class="nutrition-percentage"><strong>0%</strong></span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Total Carbohydrates</strong> {{ recipe.nutrition.carbs }}g</span>
+            <span class="nutrition-percentage"><strong>{{ getDailyValue(recipe, "carbs") }}%</strong></span>
+          </div>
+          <div class="nutrition-sub-item">
+            <span class="nutrition-sub">Sugars {{ recipe.nutrition.sugar }}g</span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main"><strong>Protein</strong> {{ recipe.nutrition.protein }}g</span>
+            <span class="nutrition-percentage"><strong>{{ getDailyValue(recipe, "protein") }}%</strong></span>
+          </div>
+          <div class="nutrition-line nutrition-line-big"></div>
+          <div class="nutrition-item">
+            <span class="nutrition-main">Vitamin A</span>
+            <span class="nutrition-percentage">6%</span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main">Vitamin C</span>
+            <span class="nutrition-percentage">0.1%</span>
+          </div>
+          <div class="nutrition-item">
+            <span class="nutrition-main">Calcium</span>
+            <span class="nutrition-percentage">2%</span>
+          </div>
+          <div class="nutrition-warning">
+            * Percent Daily Values are based on a 2000 calorie diet. </div>
+        </div>
+        <!-- end nutrition-label -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>Directions</h4>
+        <ul>
+          <li *ngFor="let direction of recipe.directions; let i = index">
+            {{ direction.step }}. {{ direction.content }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </div>

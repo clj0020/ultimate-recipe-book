@@ -33,4 +33,19 @@ export class RecipeProfileComponent implements OnInit {
 
   }
 
+  // return percent daily value of nutritional data in the recipe.
+  getDailyValue(recipe, nutritionValue) {
+    if (nutritionValue == "protein") {
+      return ((recipe.nutrition.protein / 50) * 100).toFixed(0);
+    }
+    else if (nutritionValue == "carbs") {
+      return ((recipe.nutrition.carbs / 300) * 100).toFixed(0);
+    }
+    else if (nutritionValue == "fat") {
+      return ((recipe.nutrition.fat / 65) * 100).toFixed(0);
+    }
+
+
+  }
+
 }
